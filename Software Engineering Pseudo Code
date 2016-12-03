@@ -1,0 +1,50 @@
+//Pseudo code for the Software Engineering Project. 
+//Design Workflow portion
+//Author: Joshua Green
+
+
+begin class WeeklyServices
+	struct ServiceItem{
+		variable date
+		variable provider
+		variable service
+	}
+	
+	file WeeklyServicesOutput
+
+	begin public function printWeeklyServices()
+		/*called by system during Manager request to print the services 
+		provided that week*/
+		ServiceItem CurrentServiceItem
+		
+		
+		open connection to ChocAnDatabase
+		open ServicesRecord file
+		begin loop do while( Not End of File && CurrentServiceItem date >= beginning of the week 
+		&& CurrentServiceItem date <= end of the week)
+			read file ServicesRecord line 1 store in CurrentServiceItem
+			if (CurrentServiceItem CurrentServiceItem date >= beginning of the week 
+			&& CurrentServiceItem date <= end of the week)
+				if (file WeeklyServicesOutput does not exist)
+					new file WeeklyServicesOutput
+				open file WeeklyServicesOutput
+				append CurrentServiceItem to file WeeklyServicesOutput
+			end if
+		end loop
+		if (file WeeklyServicesOutput is open)
+			close file WeeklyServicesOutput
+		close ServicesRecord file
+		close connection to ChocAnDatabase
+		return file WeeklyServicesOutput
+	end printWeeklyServices
+end WeeklyServices
+
+
+
+begin class Print
+	
+	begin public function printData(pointer item)
+		//this should probably just be overwritten in every class it is used in...
+		
+	end PrintData
+end Print
