@@ -12,7 +12,7 @@ begin class WeeklyServices
 	
 	file WeeklyServicesOutput
 
-	begin public function printWeeklyServices()
+	begin public function void printWeeklyServices()
 		/*called by system during Manager request to print the services 
 		provided that week*/
 		ServiceItem CurrentServiceItem
@@ -35,16 +35,21 @@ begin class WeeklyServices
 			close file WeeklyServicesOutput
 		close ServicesRecord file
 		close connection to ChocAnDatabase
-		return file WeeklyServicesOutput
+		print(WeeklyServicesOutput)
 	end printWeeklyServices
 end WeeklyServices
 
 
-
 begin class Print
-	
-	begin public function printData(pointer item)
-		//this should probably just be overwritten in every class it is used in...
+	begin public function printData(file item)
+		open file item
+		ServiceItem CurrentServiceItem  
 		
+		begin loop do while(not end of file)
+			CurrentServiceItem equal to current line
+			output CurrentServiceItem
+			go to next line
+		end loop
+		close file item
 	end PrintData
 end Print
