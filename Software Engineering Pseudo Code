@@ -53,3 +53,20 @@ begin class Print
 		close file item
 	end PrintData
 end Print
+
+
+begin class Services
+	/* Contains functions to list services and request them */
+	begin public function RequestServices()
+		/* called when a user requests services*/
+		ListServices()
+		input user's choice
+		sendMessage(provider of service ID, userID, ServiceItem)
+	end function RequestServices
+	
+	begin private function ListServices()
+		begin loop for (number of services available)
+			output services on screen
+		end loop
+	end function ListServices
+end Services
