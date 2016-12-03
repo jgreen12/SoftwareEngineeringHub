@@ -70,3 +70,31 @@ begin class Services
 		end loop
 	end function ListServices
 end Services
+
+begin class Message
+	public function sendMessage(Message MessageItem)
+		open messages file
+		write MessageItem to file
+		close messages file
+	end sendMessage
+	
+	public function receiveMessage(userID)
+		open messages file
+		open myMessages file
+		begin loop while(not end of file)
+			find items with matching userID in To field
+			append items to myMessages file
+		end loop
+		close myMessages file
+		close messages file
+		
+	end receiveMessage
+	
+	public function printMessages()
+		open myMessages file
+		begin loop while(not end of file)
+			print items in myMessages file
+		end loop
+		close myMessages file
+	end printMessage
+end Message
