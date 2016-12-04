@@ -62,6 +62,8 @@ begin class Services
 		ListServices()
 		input user's choice
 		sendMessage(provider of service ID, userID, ServiceItem)
+		updateAccount(add, fees)
+		/*called from account class*/
 	end function RequestServices
 	
 	begin private function ListServices()
@@ -98,3 +100,53 @@ begin class Message
 		close myMessages file
 	end printMessage
 end Message
+
+begin class PayFee
+	
+	begin public function viewFees()
+		open connection to ChocAnDatabase
+		find fees that the user owes based on userID
+		output fees to the user
+		close connection to ChocAnDatabase
+	end viewFees
+	
+	begin public function paySelectFees()
+		viewFees()
+		/*fees ouputted to screen for user via the function call above*/
+		user selects fees to pay
+		updateAccount(remove, fees)
+		/*update account function from Accountin class*/
+	end paySelectFees
+end PayFee
+
+begin class Accounting
+	file AccountLog
+	begin public function updateAccount(action, fees)
+		/*possible actions should be add or remove, 
+			code representation could be int 0 or 1 or string for readability*/
+		begin if(action is add)
+			open file User'sAccount
+			add items to file 
+			close file User'sAccount
+		end if
+		begin else
+			open file User'sAccount
+			find matching item code
+			remove items
+			close file User'sAccount
+			add items to AccountLog 
+		end else		
+	end updateAccount
+	
+	begin accountProcedure()
+		/*this is only called on Friday nights by the main system*/
+		open file AccountLog
+		read items from AccountLog
+		create ETF data from items and user information
+		open file ServicesRecord
+		update file ServicesRecord 
+		open file ServicesRecord
+		remove items from AccountLog
+		close file AccountLog		
+	end accountProcedure
+end Accounting
